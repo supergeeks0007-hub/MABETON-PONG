@@ -12,16 +12,20 @@ public class PlayerSpawner : MonoBehaviour
     {
         playerCount++;
 
-        // Define lado e posição
+        var p = playerInput.GetComponent<player>();
+
         if (playerCount == 1)
         {
             playerInput.transform.position = leftSpawn.position;
-            playerInput.GetComponent<player>().SetPlayerSide(player.PlayerSide.Player1);
+            p.SetPlayerSide(player.PlayerSide.Player1);
+            playerInput.transform.localScale = new Vector3(1, 1, 1);
         }
         else if (playerCount == 2)
         {
             playerInput.transform.position = rightSpawn.position;
-            playerInput.GetComponent<player>().SetPlayerSide(player.PlayerSide.Player2);
+            p.SetPlayerSide(player.PlayerSide.Player2);
+            playerInput.transform.localScale = new Vector3(-1, 1, 1); // espelha no X
         }
     }
+
 }
