@@ -2,30 +2,41 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
-    public int points = 1;
     public GameManager manager;
+
+    // 1️⃣ Dono do bloco
+    public player.PlayerSide brickOwner;
 
     private void Start()
     {
-        // Se não tiver GameManager arrastado no Inspector, tenta achar na cena
         if (manager == null)
         {
-            manager = FindObjectOfType<GameManager>();
+            manager = FindFirstObjectByType<GameManager>();
 
             if (manager == null)
             {
-                Debug.LogError("GameManager não encontrado na cena! Adicione um GameManager.");
+                Debug.LogError("GameManager não encontrado na cena!");
             }
         }
     }
 
-    public void Hit(player whoHit)
-{
-    if (manager != null && whoHit != null)
+    // 2️⃣ Função nova: verifica se pode quebrar
+    public void TryBreak(player whoHit)
     {
-        manager.AddScore(whoHit.GetPlayerSide(), points);
-    }
+        // Se ninguém bateu na bola ainda → não destruir
+        if (whoHit == null)
+            return;
 
-    Destroy(gameObject);
-}
+        // 3️⃣ Se quem bateu é o DONO do bloco → não destruir
+        if (whoHit.GetPlayerSide() == brickOwner)
+        {
+            // É o dono, então não destrói
+            return;
+        }
+
+        // 4️⃣ Caso contrário, quem bateu é o adversário → marcar ponto + destruir
+        manager.AddScore(whoHit.GetPlayerSide());
+
+        Destroy(gameObject);
+    }
 }
