@@ -169,3 +169,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   speed: 0
+  bounceSound: {fileID: 8300000, guid: d6e4173ec881a0c408a69034609b1f34, type: 3}

@@ -180,3 +180,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   manager: {fileID: 0}
   brickOwner: 0
+  breakSound: {fileID: 8300000, guid: 1470451455b1dad449ad6bd2f1b995a3, type: 3}

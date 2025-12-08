@@ -4,8 +4,11 @@ public class Brick : MonoBehaviour
 {
     public GameManager manager;
 
-    // 1️⃣ Dono do bloco
+    // Dono do bloco
     public player.PlayerSide brickOwner;
+
+    // 🎵 Som da quebra
+    [SerializeField] private AudioClip breakSound;
 
     private void Start()
     {
@@ -20,23 +23,22 @@ public class Brick : MonoBehaviour
         }
     }
 
-    // 2️⃣ Função nova: verifica se pode quebrar
     public void TryBreak(player whoHit)
     {
-        // Se ninguém bateu na bola ainda → não destruir
         if (whoHit == null)
             return;
 
-        // 3️⃣ Se quem bateu é o DONO do bloco → não destruir
         if (whoHit.GetPlayerSide() == brickOwner)
-        {
-            // É o dono, então não destrói
             return;
-        }
 
-        // 4️⃣ Caso contrário, quem bateu é o adversário → marcar ponto + destruir
+        // Marca ponto
         manager.AddScore(whoHit.GetPlayerSide());
 
+        // 🎵 Toca som separado do objeto
+        if (breakSound != null)
+            AudioSource.PlayClipAtPoint(breakSound, transform.position);
+
+        // ❗ Destruir imediatamente
         Destroy(gameObject);
     }
 }
